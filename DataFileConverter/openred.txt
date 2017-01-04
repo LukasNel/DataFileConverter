@@ -1,0 +1,37 @@
+BYTE b_var1 = 
+
+34;
+
+BYTE b_var2 = POOL_VAR_RND_INITIALIZED;
+
+BYTE b_var3;
+
+BYTE b_array1[] = {0x11, 0x12, 0x55};
+
+BYTE b_array2[4];
+
+WORD w_var1 = 34;
+
+WORD w_var2 = POOL_VAR_RND_INITIALIZED;
+
+WORD w_array1[] = { 0x1111, 0x12, 0x5555 };
+
+WORD w_array2[4];
+
+DWORD d_var1 = 34;
+
+DWORD d_var2 = POOL_VAR_RND_INITIALIZED;
+
+DWORD d_array1[] = { 0x11, 0x12, 0x55 };
+
+DWORD d_array2[4];
+
+DWORD d_array3[5] = { 0x11, 0x12, 0x55, 0x44444444, 0x66666666 };
+
+QWORD q_var1 = 0x1122334455;
+
+QWORD q_array1[5] = { 0x11, 0x12, 0x55, 0x44444444, 0x66666666 };
+
+LPBYTE pointer1 = NULL;
+
+LPBYTE pointer2; 
