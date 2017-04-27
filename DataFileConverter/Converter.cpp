@@ -1,9 +1,14 @@
 #include "stdafx.h"
+#pragma once
 #include <sstream>
+#include <string>
+#include <fstream>
+#include <algorithm>
+#include <vector>
+#include <stack>
 
-#define SSTR( x ) static_cast< std::ostringstream & >( \
-        ( std::ostringstream() << std::dec << x ) ).str()
-
+#define CASELESS_EQUAL(a, b) ((!to_uppercase(a).compare(to_uppercase(string(b)))) ? 1 : 0)
+#define SSTR( x ) static_cast< std::ostringstream & >(( std::ostringstream() << std::dec << x ) ).str()
 vector<string> split(const string &s, char delim) {
 	vector<string> elems;
 	stringstream ss;
@@ -51,21 +56,16 @@ char* convertArrayType(string fstr) {
 string ProcessArray(vector<string> tokens) {
 	string output = tokens[0];
 	string num = output;
+	string data = tokens[2];
 	num.erase(0, num.find("[")+1);
 	num.erase(num.find("]"),num.size());
 	output.erase(output.find("["),output.size());
-	
-	
-	string data = tokens[2];
 	if (data.find('{') != string::npos && data.find('}') != string::npos) {
 		data = EraseCharacterFromString(data, '{');
 		data = EraseCharacterFromString(data, '}');
 		num = SSTR(split(data, ',').size());
 		data = string("\n<") + convertArrayType(tokens[1]) + string("><") + data + string(">");
-	}
-	else {
-		data = "";
-	}
+	}else data = "";
 	output += " <BUFFER>";
 	if (!num.empty()) {
 		cout << num << endl;
@@ -101,9 +101,7 @@ string ConverterRed(const char* filename) {
 
 	if (filereader.is_open()) {
 		while (getline(filereader, line)) {
-
 			output += line;
-
 			if (output.find(';') == std::string::npos) {
 				output += ' ';
 				continue;
@@ -117,10 +115,8 @@ string ConverterRed(const char* filename) {
 			tokens.erase(std::remove(tokens.begin(), tokens.end(), ""), tokens.end());
 			stuff.push_back(tokens[1]);
 			stuff.push_back(split(string(convertType(tokens[0])), '=')[0]);
-			string outputwithoutSpace = output;
-			outputwithoutSpace = EraseCharacterFromString(outputwithoutSpace,' ');
-			//outputwithoutSpace.erase(std::remove(outputwithoutSpace.begin(), outputwithoutSpace.end(), ' '), outputwithoutSpace.end());
-			tokens = split(outputwithoutSpace, '=');
+			output = EraseCharacterFromString(output,' ');
+			tokens = split(output, '=');
 			if (tokens.size() > 1) {
 				stuff.push_back(tokens[1]);
 			}
@@ -136,7 +132,6 @@ string ConverterRed(const char* filename) {
 	ofstream fileout(line + filename);
 	string outStr = "";
 	for (int i = 0; i < mem.size(); i++) outStr += mem[i] + "\n";
-
 	fileout << outStr << "buckchecker";
 	fileout.close();
 	return line + filename;
